@@ -1,3 +1,5 @@
+prefix = "Tweepy >> "
+
 consumer_token = ""
 consumer_secret_token = "" 
 
