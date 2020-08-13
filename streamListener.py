@@ -1,8 +1,9 @@
 import tweepy
-from config import prefix
-from launch import api
+from config import *
 
 class StreamListener(tweepy.StreamListener):
+    api = configAPI
+
     def on_error(self, error_code):
         if error_code == 420:
              return False
