@@ -1,8 +1,9 @@
 import tweepy
+from config import *
 
-consumer_token = ""
-consumer_secret_token = "" 
+auth = tweepy.OAuthHandler(consumer_token, consumer_secret_token)
+auth.set_access_token(access_token, access_secret_token)
+api = tweepy.API(auth)
 
-auth_token = ""
-auth_secret_token = ""
-
+stream = tweepy.Stream(api = api.auth, listener = StreamListener())
+stream.userstream()
