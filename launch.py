@@ -1,12 +1,23 @@
-import tweepy
+from flask import Flask, request
 from config import *
-from streamListener import *
+from eventManager import EventManager
 
-auth = tweepy.OAuthHandler(consumer_token, consumer_secret_token)
-auth.set_access_token(access_token, access_secret_token)
-api = tweepy.API(auth)
-configAPI = api
+def nothing():
+    return "Nothing here !"
 
-streamListener = StreamListener()
-stream = tweepy.Stream(api = api.auth, listener = streamListener)
-stream.userstream()
+app = Flask("__launch__")
+
+@app.route("/", ["GET"])
+def home():
+    nothing()
+
+@app.route(webhooksDir, ["GET"])
+def webhooks():
+    nothing()
+
+@app.route(webhooksDir + "/twitter/", ["POST"])
+def twitterWebhook():
+    jsonRequest = request.get_json()
+    event = jsonRequest["event"]
+    eventManager = EventManager()
+    eventManager.manage(event)
